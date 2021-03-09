@@ -1,0 +1,16 @@
+{
+  "name": "wechat-makeup-mall",
+  "version": "1.0.0",
+  "description": "微信小程序商城，化妆品微店",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LuckyStar04",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.6.8",
+    "wxa-plugin-canvas": "^1.1.12",
+    "wxbarcode": "^1.0.2"
+  }
+}
