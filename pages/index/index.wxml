@@ -1,23 +1,67 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <block wx:if="{{canIUseOpenData}}" calss="userinfo-opendata">
-      <view class="userinfo-avatar" bindtap="bindViewTap">
-        <open-data type="userAvatarUrl"></open-data>
-      </view>
-      <open-data type="userNickName"></open-data>
-    </block>
-    <block wx:elif="{{!hasUserInfo}}">
-      <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-      <button wx:elif="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-      <view wx:else> 请使用1.4.4及以上版本基础库 </view>
-    </block>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+<van-search value="{{ value }}" placeholder="请输入搜索关键词" readonly shape="round" bindtap="goSearch" />
+<view class="swiper-container">
+  <swiper class="swiper1" indicator-dots="true" indicator-active-color="#fff" autoplay circular>
+    <swiper-item wx:for="{{banners}}" wx:key="id">
+      <image mode="aspectFill" bindtap="tapBanner" data-url="{{item.urlLink}}" src="{{item.imagePath}}" />
+    </swiper-item>
+  </swiper>
+
+  <view class="notice-bar">
+    <van-notice-bar wx:if="{{notice}}" left-icon="volume-o" mode="link" text="{{ notice.title }}" background="#FFFFFF"
+      speed="30" bind:click="goNotice" />
   </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
+
+  <view class='space'></view>
+  <view class="weui-loadmore weui-loadmore_line" style="margin-bottom: 0px !important;">
+    <view class="weui-loadmore__tips weui-loadmore__tips_in-line font-30rpx">热销系列</view>
+  </view>
+  <view class="category-box">
+    <view class="category-list" wx:for="{{categories}}" wx:key="id">
+      <view class="category-column {{activeCategoryId == item.id ? 'type-item-on' : ''}}" bindtap="onCategoryTap"
+        data-id="{{item.id}}">
+        <image mode="aspectFit" class="category-imgbox" src="{{item.icon}}"></image>
+        <view class="category-title">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class='space'></view>
+  <view class="index-container">
+    <view class="index-title">店长推荐</view>
+    <view class="products-container">
+      <view class="products-box" wx:for="{{recommendProducts}}" wx:key="id" bindtap="onDetailsTap"
+        data-id="{{item.id}}">
+        <view class="img-box">
+          <image src="{{item.image}}" class="image" mode="aspectFill" lazy-load="true" />
+        </view>
+        <view class="products-title">{{item.name}}</view>
+        <view style='display:flex;'>
+          <view class="products-price">¥ {{item.price}}</view>
+          <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="products-price"
+            style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="index-title">热销产品</view>
+    <view class="products-container">
+      <view class="products-box" wx:for="{{topSalesProducts}}" wx:key="id" bindtap="onDetailsTap" data-id="{{item.id}}">
+        <view class="img-box">
+          <image src="{{item.image}}" class="image" mode="aspectFill" lazy-load="true" />
+        </view>
+        <view class="products-title">{{item.name}}</view>
+        <view style='display:flex;'>
+          <view class="products-price">¥ {{item.price}}</view>
+          <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="products-price"
+            style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="weui-loadmore weui-loadmore_line" style="margin-bottom:0px !important;">
+      <view class="weui-loadmore__tips weui-loadmore__tips_in-line font-30rpx" style="background-color:#f2f2f2;">没有更多啦</view>
+    </view>
+  </view>
+  <view class='coupons-float' bindtap="goCoupons">
+    <image src="/images/gift.png"></image>
   </view>
 </view>

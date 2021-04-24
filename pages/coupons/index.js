@@ -1,66 +1,111 @@
-// pages/coupons/index.js
+const auth = require('../../utils/auth.js');
+const utils = require('../../utils/util.js');
+
 Page({
+  data: {
+    availableCoupons: [],
+    ownedCoupons: [],
+    expiredCoupons: [],
+    showLoginPopup: false,
+    canIUseGetProfile: true,
+  },
 
-    /**
-     * 页面的初始数据
-     */
-    data: {
+  async onLoad(e) {
 
-    },
+  },
 
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function (options) {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
-    },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+  async onShow(e) {
+    if (wx.canIUse('getUserProfile')) {
+      this.setData({
+        canIUseGetProfile: true
+      });
+    } else {
+      this.setData({
+        canIUseGetProfile: false
+      });
     }
-})
+
+    let loginResult = await auth.tryLogin();
+    console.log(loginResult);
+    if (loginResult == 'success') {
+      this.setData({
+        showLoginPopup: false
+      });
+      await loadCoupons();
+    } else if (loginResult == 'unauthorized') {
+      this.setData({
+        showLoginPopup: true
+      });
+    } else {
+      this.setData({
+        showLoginPopup: false
+      });
+      wx.showToast({
+        title: '用户登录失败',
+        icon: 'error'
+      });
+    }
+  },
+
+  async loadCoupons() {
+
+  },
+
+  getUserProfile: function () {
+    wx.getUserProfile({
+      desc: '用于获取用户头像昵称',
+      lang: 'zh_CN',
+      success: async (res) => {
+        wx.setStorageSync('userInfo', res.userInfo);
+        const openid = wx.getStorageSync('openid');
+        const token = await utils.requestPost({
+          url: '/users',
+          data: {
+            openID: openid,
+            userInfo: res.userInfo,
+            encryptedData: res.encryptedData,
+            iv: res.iv
+          }
+        });
+        wx.setStorageSync('accessToken', 'Bearer ' + token.data.accessToken);
+        wx.setStorageSync('userid', token.data.userid);
+        this.setData({
+          showLoginPopup: false
+        });
+        wx.showToast({
+          title: '登录成功',
+        });
+        await loadCoupons();
+      }
+    });
+  },
+
+  getUserInfo: function () {
+    wx.getUserInfo({
+      lang: 'zh_CN',
+      success: async (res) => {
+        wx.setStorageSync('userInfo', res.userInfo);
+        const openid = wx.getStorageSync('openid');
+        const token = await utils.requestPost({
+          url: '/users',
+          data: {
+            openID: openid,
+            userInfo: res.userInfo,
+            encryptedData: res.encryptedData,
+            iv: res.iv
+          }
+        });
+        wx.setStorageSync('accessToken', 'Bearer ' + token.data.accessToken);
+        wx.setStorageSync('userid', token.data.userid);
+        this.setData({
+          showLoginPopup: false
+        });
+        wx.showToast({
+          title: '登录成功',
+        });
+        await loadCoupons();
+      }
+    })
+  },
+
+});
