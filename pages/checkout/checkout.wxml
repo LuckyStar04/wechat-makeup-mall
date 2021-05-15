@@ -1,0 +1,73 @@
+<view class="container2">
+  <view class="address-box" bindtap="chooseAddress">
+    <view wx:if="{{ !address.address }}" class="address">
+      <view class="address-2">
+        <van-icon name="add-o" /><text class="address-empty">新增收货地址</text>
+      </view>
+    </view>
+    <view wx:else class="address">
+      <view class="address-1">
+        <van-tag wx:if="{{address.isDefault}}" type="danger" class="address-default">默认</van-tag>
+        <text class="address-city">{{address.province}} {{address.city}} {{address.county}}</text>
+      </view>
+      <view class="address-2">
+        <text class="address-detail">{{address.address}}</text>
+      </view>
+      <view class="address-3">
+        <text class="name">{{address.receiverName}}</text>
+        <text class="phone">{{address.phoneNumber}}</text>
+      </view>
+    </view>
+    <van-icon class="address-next" name="arrow" />
+  </view>
+
+  <view class="products" bindtap="showProducts">
+    <view class="product-title">商品列表</view>
+    <view class="product-box">
+      <view class="product-imgs">
+        <block wx:for="{{products}}" wx:key="id">
+          <image class="product-img" src="{{item.product.image}}" />
+        </block>
+      </view>
+      <view class="product-viewall">
+        <text class="view-text">共{{selectedSumCount}}件</text>
+        <van-icon class="product-viewall-arrow" name="arrow" />
+      </view>
+    </view>
+  </view>
+
+  <view class="checkout-detail-box">
+    <text class="checkout-title">总计</text>
+    <view class="checkout-detail">
+      <van-cell-group>
+        <van-cell title="商品金额" value="￥{{ selectedSumPrice }}" size="large" border="{{ false }}" />
+        <van-cell title="运费" value="￥10" size="large" border="{{ false }}" />
+        <van-cell title="优惠券" is-link value="选择优惠券" size="large" border="{{ false }}" bindtap="showCoupons" />
+      </van-cell-group>
+    </view>
+  </view>
+
+  <van-submit-bar price="{{ selectedSumPrice*100+1000 }}" button-text="提交订单"
+    bind:submit="onSubmit" />
+</view>
+<van-popup show="{{ showProduct }}" round closeable position="bottom" bind:close="onCloseProduct">
+  <view class="popup-products-box" style="max-height:70vh;overflow:scroll;">
+    <view class="popup-products" wx:for="{{products}}" wx:key="id">
+      <image class="p-img" mode="aspectFill" src="{{item.product.image}}" />
+      <view class="p-middle">
+        <text class="p-name">{{item.product.name}}</text>
+        <text class="p-price">￥ {{item.product.price}}</text>
+      </view>
+      <view class="p-right">
+        <text>×{{item.count}}</text>
+      </view>
+    </view>
+  </view>
+</van-popup>
+
+<van-popup show="{{ showCoupon }}" round position="bottom" custom-style="height: 20%" bind:close="onCloseCoupon">
+
+</van-popup>
+<van-dialog id="van-dialog" />
+
+<v-login message="为了获取您的订单及地址信息，请您登录后操作" bind:loginSuccess="loadData" bind:loginFailed="loginFailed"></v-login>

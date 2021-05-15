@@ -46,7 +46,8 @@ const doLogin = async () => {
       wx.setStorageSync('openid', result.data);
       return 'unauthorized';
     } else {
-      wx.setStorageSync('accessToken', result.data);
+      wx.setStorageSync('accessToken', 'Bearer ' + result.data.accessToken);
+      wx.setStorageSync('userid', result.data.userid);
       return 'success';
     }
   } catch {

@@ -1,0 +1,10 @@
+<van-popup show="{{showLoginPopup}}" round>
+    <view style="width:600rpx;">
+        <view class="popup-title">请求登录</view>
+        <view class="popup-text">{{ message }}</view>
+    </view>
+    <view style="width:100%;text-align:center;vertical-align:middle;">
+        <button wx:if="{{canIUseGetProfile}}" class="popup-button" bindtap="getUserProfile">立即登录</button>
+        <button wx:else class="popup-button" open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即登录</button>
+    </view>
+</van-popup>

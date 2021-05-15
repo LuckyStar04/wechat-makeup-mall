@@ -1,0 +1,25 @@
+<van-empty wx:if="{{address.length == 0}}" description="暂无收货地址" />
+<view wx:else class="address-outer">
+  <view class="address-box" wx:for="{{address}}" wx:key="id">
+    <view class="address" bindtap="addressSelected" data-id="{{item.id}}">
+      <view class="address-1">
+        <van-tag wx:if="{{item.isDefault}}" type="danger" class="address-default">默认</van-tag>
+        <text class="address-city">{{item.province}} {{item.city}} {{item.county}}</text>
+      </view>
+      <view class="address-2">
+        <text class="address-detail">{{item.address}}</text>
+      </view>
+      <view class="address-3">
+        <text class="name">{{item.receiverName}}</text>
+        <text class="phone">{{item.phoneNumber}}</text>
+      </view>
+    </view>
+    <van-icon name="edit" size="48rpx" bindtap="modifyAddress" data-id="{{item.id}}" />
+  </view>
+  <view style="background-color:#f2f2f2;height:154rpx;"></view>
+</view>
+<view class="bottom-box">
+  <van-button round type="danger" icon="plus" bind:click="addAddress">新增收货地址</van-button>
+</view>
+
+<v-login message="为了获取您的地址信息，请您登录后操作" bind:loginSuccess="loadAddress" bind:loginFailed="loginFailed"></v-login>

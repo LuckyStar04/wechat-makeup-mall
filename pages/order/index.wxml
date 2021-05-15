@@ -1,0 +1,14 @@
+<van-tabs animated>
+  <van-tab title="待付款">
+  </van-tab>
+  <van-tab title="待发货">
+  </van-tab>
+  <van-tab title="待收货">
+  </van-tab>
+  <van-tab title="待评价">
+  </van-tab>
+  <van-tab title="退款中">
+  </van-tab>
+</van-tabs>
+
+<v-login message="为了获取您的订单信息，请您登录后操作" bind:loginSuccess="loadOrders" bind:loginFailed="loginFailed"></v-login>

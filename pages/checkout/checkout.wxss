@@ -1,0 +1,166 @@
+page {
+  background-color: #f2f2f2;
+}
+
+.container2 {
+  display: block;
+}
+
+.address-box {
+  height: 250rpx;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32rpx 0;
+}
+
+.address {
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+
+.address-1 {
+  display: inline;
+}
+
+.address-default {
+  margin-right: 20rpx;
+}
+
+.address-city {
+  font-size: 26rpx;
+}
+
+.address-detail {
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.address-empty {
+  font-size: 34rpx;
+  padding-left: 15rpx;
+}
+
+.address-3 {
+  font-size: 26rpx;
+}
+
+.phone {
+  margin-left: 20rpx;
+}
+
+.products {
+  background-color: white;
+  margin:45rpx 0 45rpx;
+  border-radius: 30rpx;
+  overflow: hidden;
+}
+
+.product-title {
+  padding: 30rpx 32rpx 0;
+  font-size: 32rpx;
+}
+
+.product-box {
+  padding: 20rpx 32rpx 40rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.product-imgs {
+  height: 100rpx;
+  width: 60%;
+  display: inline-block;
+  overflow: hidden;
+}
+
+.product-img {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.product-viewall {
+  display: flex;
+  align-items: center;
+}
+
+.view-text {
+  display: block;
+  font-size: 32rpx;
+  margin-bottom: 5rpx;
+}
+
+.checkout-detail-box {
+  margin-top: 40rpx;
+}
+
+.checkout-title {
+  display: block;
+  padding: 0 32rpx 20rpx;
+  font-size: 32rpx;
+}
+
+.checkout-detail {
+  border-radius: 30rpx;
+  overflow: hidden;
+}
+
+.popup-products-box {
+  /* background-color: #f2f2f2; */
+  overflow: hidden;
+  padding: 8rpx 30rpx 30rpx;
+}
+
+.popup-products {
+  width: 700rpx;
+  height: 220rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  background-color: #fff;
+  border-radius: 30rpx;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.p-left {
+  padding: 5rpx;
+}
+
+.p-img {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 16rpx;
+}
+
+.p-middle {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10rpx;
+}
+
+.p-right {
+  color: #555;
+  padding-right: 15rpx;
+}
+
+.p-name {
+  display: block;
+  width: 350rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: keep-all;
+  font-size: 32rpx;
+  margin-top: 45rpx;
+}
+
+.p-price {
+  font-size: 26rpx;
+  color: red;
+  margin-top: 10rpx;
+}

@@ -1,0 +1,30 @@
+<view class="address-title">
+  <text>新增收货地址</text>
+</view>
+
+<view class="address-box">
+  <van-cell-group>
+    <van-field clearable label="姓名" placeholder="收货人姓名" size="large" border="{{ false }}" maxlength="50" bind:change="onNameChange" error-message="{{nameErrmsg}}" />
+    <van-field clearable label="电话" placeholder="收货人手机号" size="large" border="{{ false }}" maxlength="50" type="number" bind:change="onPhoneChange" error-message="{{phoneErrmsg}}" />
+    <van-field readonly label="地区" placeholder="选择省 / 市 / 区" is-link size="large" border="{{ false }}" bindtap="toggleArea" value="{{fullArea}}" error-message="{{areaErrmsg}}"/>
+    <van-field clearable label="详细地址" placeholder="街道门牌、楼层房间号等信息" size="large" border="{{ false }}" maxlength="255" bind:change="onDetailChange" error-message="{{detailErrmsg}}" />
+    <van-field clearable label="邮政编码" placeholder="邮政编码" size="large" border="{{ false }}" type="number" maxlength="6" bind:change="onPostChange" error-message="{{postErrmsg}}" />
+  </van-cell-group>
+</view>
+
+
+<view class="address-box">
+  <van-cell-group>
+    <van-cell title="设为默认收货地址" size="large">
+      <van-switch size="24px" checked="{{address.isDefault}}" active-color="#ee0a24" bind:change="onDefaultChange"/>
+    </van-cell>
+  </van-cell-group>
+</view>
+
+<view class="address-box">
+  <van-button type="danger" size="large" block bindtap="saveAddress">保存</van-button>
+</view>
+
+<van-popup show="{{ showArea }}" round position="bottom" bind:close="toggleArea">
+  <van-area area-list="{{ areaList }}" bind:cancel="toggleArea" bind:confirm="confirmArea" value="{{address.countyID}}"/>
+</van-popup>

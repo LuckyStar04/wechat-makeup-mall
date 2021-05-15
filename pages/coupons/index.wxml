@@ -1,23 +1,105 @@
 <van-tabs animated>
   <van-tab title="可领">
     <van-empty wx:if="{{ !availableCoupons || availableCoupons.length == 0 }}" description="暂无优惠券" />
+    <block wx:else>
+      <block wx:for="{{ availableCoupons }}" wx:key="couponID">
+        <view class="coupons" data-item="{{item}}" bindtap="getCoupon">
+          <image class="coupon-bg" src="{{(item.coupon.allowLimit > 0 && item.recievedCount >= item.coupon.allowLimit)||item.coupon.couponCount<=0 ? '/images/coupon2.png' : '/images/coupon.png'}}"></image>
+          <view class="coupon">
+            <view class="coupon-left">
+              <view class="c-left-title">
+                <view class="flex-item" wx:if="{{item.coupon.couponType == 0}}">
+                  <text style="font-size:40rpx;">¥</text>
+                  <text style="font-size:80rpx;font-weight:500;">{{item.coupon.amount}}</text>
+                </view>
+                <view class="flex-item" wx:elif="{{item.coupon.couponType == 1}}">
+                  <text style="font-size:80rpx;font-weight:500;">{{item.coupon.amount * 10}}</text>
+                  <text style="font-size:32rpx;">折</text>
+                </view>
+              </view>
+              <view class="c-left-condition">满{{item.coupon.condition}}可用</view>
+            </view>
+            <view class="coupon-middle">
+              <view class="c-middle-title">{{item.coupon.couponName}}</view>
+              <view style="font-size:26rpx;" wx:if="{{item.productIDs.length == 0}}">不限制品类</view>
+              <view style="font-size:26rpx;" wx:else>仅可购买部分商品</view>
+              <view style="font-size:26rpx;">{{item.coupon.sDate}}-{{item.coupon.eDate}}</view>
+            </view>
+            <view wx:if="{{item.coupon.couponCount>0 && !(item.coupon.allowLimit > 0 && item.recievedCount >= item.coupon.allowLimit)}}" class="coupon-right">
+              <view class="coupon-get">领取</view>
+            </view>
+          </view>
+          <image class="no-coupon" wx:if="{{item.coupon.couponCount<=0 || (item.coupon.allowLimit > 0 && item.recievedCount >= item.coupon.allowLimit) }}" src="/images/no-coupon.png"></image>
+        </view>
+      </block>
+    </block>
   </van-tab>
   <van-tab title="已领">
     <van-empty wx:if="{{ !ownedCoupons || ownedCoupons.length == 0 }}" description="暂无优惠券" />
+    <block wx:else>
+      <block wx:for="{{ ownedCoupons }}" wx:key="id">
+        <view class="coupons">
+          <image class="coupon-bg" src="/images/coupon.png"></image>
+          <view class="coupon">
+            <view class="coupon-left">
+              <view class="c-left-title">
+                <view class="flex-item" wx:if="{{item.coupon.couponType == 0}}">
+                  <text style="font-size:40rpx;">¥</text>
+                  <text style="font-size:80rpx;font-weight:500;">{{item.coupon.amount}}</text>
+                </view>
+                <view class="flex-item" wx:elif="{{item.coupon.couponType == 1}}">
+                  <text style="font-size:80rpx;font-weight:500;">{{item.coupon.amount * 10}}</text>
+                  <text style="font-size:32rpx;">折</text>
+                </view>
+              </view>
+              <view class="c-left-condition">满{{item.coupon.condition}}可用</view>
+            </view>
+            <view class="coupon-middle">
+              <view class="c-middle-title">{{item.coupon.couponName}}</view>
+              <view style="font-size:26rpx;" wx:if="{{item.productIDs.length == 0}}">不限制品类</view>
+              <view style="font-size:26rpx;" wx:else>仅可购买部分商品</view>
+              <view style="font-size:26rpx;">{{item.coupon.sDate}}-{{item.coupon.eDate}}</view>
+            </view>
+            <view class="coupon-right">
+              <view class="coupon-get">使用</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </block>
   </van-tab>
   <van-tab title="失效">
     <van-empty wx:if="{{ !expiredCoupons || expiredCoupons.length == 0 }}" description="暂无优惠券" />
+    <block wx:else>
+      <block wx:for="{{ expiredCoupons }}" wx:key="id">
+        <view class="coupons">
+          <image class="coupon-bg" src="/images/coupon2.png"></image>
+          <view class="coupon">
+            <view class="coupon-left">
+              <view class="c-left-title">
+                <view class="flex-item" wx:if="{{item.coupon.couponType == 0}}">
+                  <text style="font-size:40rpx;">¥</text>
+                  <text style="font-size:80rpx;font-weight:500;">{{item.coupon.amount}}</text>
+                </view>
+                <view class="flex-item" wx:elif="{{item.coupon.couponType == 1}}">
+                  <text style="font-size:80rpx;font-weight:500;">{{item.coupon.amount * 10}}</text>
+                  <text style="font-size:32rpx;">折</text>
+                </view>
+              </view>
+              <view class="c-left-condition">满{{item.coupon.condition}}可用</view>
+            </view>
+            <view class="coupon-middle">
+              <view class="c-middle-title">{{item.coupon.couponName}}</view>
+              <view style="font-size:26rpx;" wx:if="{{item.productIDs.length == 0}}">不限制品类</view>
+              <view style="font-size:26rpx;" wx:else>仅可购买部分商品</view>
+              <view style="font-size:26rpx;">{{item.coupon.sDate}}-{{item.coupon.eDate}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </block>
   </van-tab>
 </van-tabs>
 
 
-<van-popup show="{{ showLoginPopup }}" round>
-    <view style="width:600rpx;">
-        <view class="popup-title">请求登录</view>
-        <view class="popup-text">为了获取您领取的优惠券，请您登录后操作</view>
-    </view>
-    <view style="width:100%;text-align:center;vertical-align:middle;">
-        <button wx:if="{{canIUseGetProfile}}" class="popup-button" bindtap="getUserProfile">立即登录</button>
-        <button wx:else class="popup-button" open-type="getUserInfo" bindgetuserinfo="getUserInfo">立即登录</button>
-    </view>
-</van-popup>
+<v-login message="为了获取您的优惠券信息，请您登录后操作" bind:loginSuccess="loadCoupons" bind:loginFailed="loginFailed"></v-login>

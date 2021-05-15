@@ -1,1 +1,116 @@
-/* pages/my/index.wxss */
+page {
+  background-color: #f2f2f2;
+}
+
+.container2 {
+  display: block;
+}
+
+.user-info {
+  height: 160rpx;
+}
+
+.avatar-box {
+  display: flex;
+  padding: 25rpx;
+}
+
+.avatar {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 65rpx;
+}
+
+.user-name {
+  padding-left: 40rpx;
+  padding-top: 20rpx;
+  font-size: 40rpx;
+}
+
+.info-box {
+  width: 700rpx;
+  border-radius: 20rpx;
+  background-color: white;
+  margin: 25rpx 25rpx 0;
+  overflow: hidden;
+}
+
+.box-title {
+  display: flex;
+  justify-content: space-between;
+  padding: 20rpx 0 20rpx;
+}
+
+.title-left {
+  padding-left: 25rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.title-right {
+  font-size: 24rpx;
+  color: #aaa;
+  padding-right: 20rpx;
+}
+
+.items {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  padding: 20rpx 0 20rpx;
+}
+
+.item {
+  width: 140rpx;
+  display: flex;
+  align-items: flex-start;
+}
+
+.item-2 {
+  width: 140rpx;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.item-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+.item-badge {
+  margin-left: -60rpx;
+}
+
+.item-name {
+  padding-top: 5rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.card-items {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+  padding: 0 0 20rpx;
+}
+
+.card-num {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 48rpx;
+  font-weight: 500;
+  color: #333;
+}
+
+.card-name {
+  padding-top: 5rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.title-others {
+  padding: 25rpx 45rpx 0;
+  font-size: 28rpx;
+  font-weight: bold;
+}

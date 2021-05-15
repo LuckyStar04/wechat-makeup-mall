@@ -1,0 +1,23 @@
+page {
+  background-color: #f2f2f2;
+}
+
+.address-title {
+  padding: 40rpx 20rpx 10rpx;
+  font-size: 16px;
+  color: rgba(69, 90, 100, 0.6);
+}
+
+.address-box {
+  margin: 20rpx 20rpx 0;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.default-box .van-field__label {
+  vertical-align: middle;
+}
+
+.default-box .van-cell__title {
+  max-width: 750rpx !important;
+}

@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "van-image": "@vant/weapp/image/index",
     "v-login": "/components/login/index"
   }
 }

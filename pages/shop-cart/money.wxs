@@ -1,0 +1,15 @@
+var money = {
+  getIntegerPart: function (value) {
+      return '' + parseInt(value / 100);
+  },
+
+  getDecimalPart: function (value) {
+      var __v = value - parseInt(value / 100) * 100;
+      return __v > 9 ? '' + __v : '0' + __v;
+  }
+}
+
+module.exports = {
+  getInteger: money.getIntegerPart,
+  getDecimal: money.getDecimalPart,
+}

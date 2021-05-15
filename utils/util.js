@@ -9,6 +9,14 @@ const formatTime = date => {
   return `${[year, month, day].map(formatNumber).join('/')} ${[hour, minute, second].map(formatNumber).join(':')}`
 }
 
+const formatDate = date => {
+  const year = date.getFullYear()
+  const month = date.getMonth() + 1
+  const day = date.getDate()
+
+  return `${[year, month, day].map(formatNumber).join('.')}`
+}
+
 const formatNumber = n => {
   n = n.toString()
   return n[1] ? n : `0${n}`
@@ -80,10 +88,29 @@ const postWithToken = (options) => {
   })
 }
 
+const putWithToken = (options) => {
+  return new Promise((resolve, reject) => {
+    const token = wx.getStorageSync('accessToken');
+    wx.request({
+      url: options.url.startsWith('http') ? options.url : pubUrl + options.url,
+      method: options.method || 'PUT',
+      data: options.data || {},
+      header: options.header || {
+        'content-type': 'application/json',
+        'authorization': token,
+      },
+      success: resolve,
+      fail: reject
+    })
+  })
+}
+
 module.exports = {
   formatTime,
+  formatDate,
   request,
   requestPost,
   requestWithToken,
-  postWithToken
+  postWithToken,
+  putWithToken
 }

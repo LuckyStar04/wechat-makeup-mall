@@ -1,2 +1,97 @@
-<!--pages/my/index.wxml-->
-<text>pages/my/index.wxml</text>
+<view class="container2">
+  <view class="user-info">
+    <view class="avatar-box">
+      <block wx:if="{{!userInfo.avatarUrl}}">
+        <image class="avatar" src="../../images/no-login-whitebg.jpg"></image>
+        <text class="user-name">未登录</text>
+      </block>
+      <block wx:else>
+        <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
+        <text class="user-name">{{userInfo.nickName}}</text>
+      </block>
+    </view>
+  </view>
+
+  <view class="info-box">
+    <view class="box-title">
+      <text class="title-left">我的订单</text>
+      <text class="title-right">查看全部 ></text>
+    </view>
+    <view class="items">
+      <view class="item">
+        <view class="item-2">
+          <image class="item-icon" src="../../images/order/topay.png"></image>
+          <view class="item-name">待付款</view>
+        </view>
+        <view class="weui-badge item-badge" wx:if="{{orderCounts[0]>0}}">{{orderCounts[0]}}</view>
+      </view>
+      <view class="item">
+        <view class="item-2">
+          <image class="item-icon" src="../../images/order/fahuo.png"></image>
+          <view class="item-name">待发货</view>
+        </view>
+        <view class="weui-badge item-badge" wx:if="{{orderCounts[1]>0}}">{{orderCounts[1]}}</view>
+      </view>
+      <view class="item">
+        <view class="item-2">
+          <image class="item-icon" src="../../images/order/shouhuo.png"></image>
+          <view class="item-name">待收货</view>
+        </view>
+        <view class="weui-badge item-badge" wx:if="{{orderCounts[2]>0}}">{{orderCounts[2]}}</view>
+      </view>
+      <view class="item">
+        <view class="item-2">
+          <image class="item-icon" src="../../images/order/pj.png"></image>
+          <view class="item-name">待评价</view>
+        </view>
+        <view class="weui-badge item-badge" wx:if="{{orderCounts[3]>0}}">{{orderCounts[3]}}</view>
+      </view>
+      <view class="item">
+        <view class="item-2">
+          <image class="item-icon" src="../../images/order/shouhou.png"></image>
+          <view class="item-name">退款中</view>
+        </view>
+        <view class="weui-badge item-badge" wx:if="{{orderCounts[4]>0}}">{{orderCounts[4]}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-box">
+    <view class="box-title">
+      <text class="title-left">我的卡包</text>
+    </view>
+    <view class="card-items">
+      <view class="item-2">
+        <text class="card-num" wx:if="{{couponCounts[0]>0}}">{{couponCounts[0]}}</text>
+        <text class="card-num" wx:else>-</text>
+        <view class="card-name">可领优惠券</view>
+      </view>
+      <view class="item-2">
+        <text class="card-num" wx:if="{{couponCounts[1]>0}}">{{couponCounts[1]}}</text>
+        <text class="card-num" wx:else>-</text>
+        <view class="card-name">已领优惠券</view>
+      </view>
+      <view class="item-2">
+        <text class="card-num">3</text>
+        <view class="card-name">我的收藏</view>
+      </view>
+      <view class="item-2">
+        <text class="card-num">120</text>
+        <view class="card-name">我的积分</view>
+      </view>
+    </view>
+  </view>
+
+
+  <view class="title-others">其他功能</view>
+  <view class="info-box">
+    <van-cell-group>
+      <van-cell title="个人信息" is-link url="/pages/my/info-menu" size="large" />
+      <van-cell title="收货地址管理" is-link url="/pages/address/address" size="large" />
+      <van-cell title="其他设置" is-link url="/pages/my/setting" size="large" />
+    </van-cell-group>
+  </view>
+</view>
+
+
+<v-login message="为了获取您的订单信息，请您登录后操作" bind:loginSuccess="loadInfo" bind:loginFailed="loginFailed"></v-login>
