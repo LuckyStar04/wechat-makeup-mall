@@ -10,6 +10,10 @@ Page({
     productID: '',
     productDetail: {},
     shopCartCount: 0,
+    address: {},
+    fare: {},
+    fareStr: '',
+    fareRules: {},
   },
 
   /**
@@ -28,11 +32,25 @@ Page({
       });
       result = wx.getStorageSync('shopCartCount');
       if (result == '') {
-        this.setData({shopCartCount: 0});
+        this.setData({
+          shopCartCount: 0
+        });
       } else {
-        this.setData({shopCartCount: result});
+        this.setData({
+          shopCartCount: result
+        });
       }
 
+      const price = await this.calcFareWithoutProvince();
+      if (price > 0) {
+        this.setData({
+          fareStr: '￥ ' + price + ' 元起',
+        });
+      } else {
+        this.setData({
+          fareStr: '包邮',
+        });
+      }
       wx.hideLoading();
     } catch (e) {
       wx.hideLoading();
@@ -41,6 +59,60 @@ Page({
         icon: 'error'
       });
     }
+  },
+
+  loadInfo: async function () {
+    const addr = await utils.requestWithToken({
+      url: '/users/addrs?isDefault=true',
+    });
+    if (addr.data.length > 0) { //有地址
+      this.setData({
+        address: addr.data[0]
+      });
+      const province = addr.data[0].province;
+
+      const price = await this.calcFare(province);
+      if (price > 0) {
+        this.setData({
+          fareStr: '￥ ' + price + ' 元起',
+        });
+      } else {
+        this.setData({
+          fareStr: '包邮',
+        });
+      }
+    }
+  },
+
+  calcFare: async function (province) {
+    const fare = await utils.requestWithToken({
+      url: '/shippingfares/' + this.data.productDetail.shippingFareID
+    });
+    const rules = JSON.parse(fare.data.rules);
+    console.log(fare.data);
+    console.log(rules.include);
+    console.log(rules.includee);
+    if (!rules.include) {
+      return rules.all[0];
+    } else {
+      const result = rules.include.province.indexOf(province);
+      if (result == -1) {
+        return rules.all[0];
+      } else {
+        return rules.include.price[0];
+      }
+    }
+  },
+
+  calcFareWithoutProvince: async function () {
+    const fare = await utils.requestWithToken({
+      url: '/shippingfares/' + this.data.productDetail.shippingFareID
+    });
+    const rules = JSON.parse(fare.data.rules);
+    let minPrice = 10000;
+    if (rules.include.price[0] < minPrice) minPrice = rules.include.price[0];
+    if (rules.all[0] < minPrice) minPrice = rules.all[0];
+    return minPrice;
   },
 
   /**

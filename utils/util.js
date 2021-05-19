@@ -23,7 +23,7 @@ const formatNumber = n => {
 }
 
 
-const pubUrl = "http://192.168.2.216:5000/api" //这是我要请求的数据接口的公共部分
+const pubUrl = "http://192.168.2.216:5000/api";
 const request = (options) => {
   return new Promise((resolve, reject) => {
     wx.request({
